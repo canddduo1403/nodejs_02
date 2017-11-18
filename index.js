@@ -28,6 +28,10 @@ const q = async.queue((task, callback) => {
     request(task.url, (err, res, body) => {
         $ = cheerio.load(body)
         //console.log($('#mw-content-text').text())
+        if(err){
+            console.log(err)
+            callback()
+        } 
 
         const text = $('#mw-content-text p').text();
         fs.writeFile(task.name + ".txt", text, (err) => {
